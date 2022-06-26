@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\FixtureController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\LeagueTableController;
+use App\Http\Controllers\PredictionController;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('fixtures/get-latest-week',    [FixtureController::class, 'getLatestWeek'])->name('fixtures.get_latest_week');
+Route::get('fixtures/get-fixtures',       [FixtureController::class, 'getAllFixtures'])->name('fixtures.get_all_fixtures');
+Route::get('fixtures/get-fixture/{week}', [FixtureController::class, 'getFixture'])->name('fixtures.get_fixture');
+Route::get('fixtures/prepare-fixtures',   [FixtureController::class, 'prepareFixtures'])->name('fixtures.prepare_fixtures');
+Route::get('fixtures/reset-fixtures',     [FixtureController::class, 'resetFixtures'])->name('fixtures.reset_fixtures');
