@@ -24,3 +24,5 @@ Route::get('fixtures/get-fixtures',       [FixtureController::class, 'getAllFixt
 Route::get('fixtures/get-fixture/{week}', [FixtureController::class, 'getFixture'])->name('fixtures.get_fixture');
 Route::get('fixtures/prepare-fixtures',   [FixtureController::class, 'prepareFixtures'])->name('fixtures.prepare_fixtures');
 Route::get('fixtures/reset-fixtures',     [FixtureController::class, 'resetFixtures'])->name('fixtures.reset_fixtures');
+Route::get('play/next-week',              [GameController::class, 'playNextWeek'])->name('play.next_week');
+Route::get('play/all-weeks',              [GameController::class, 'playAllWeeks'])->name('play.all_weeks');
