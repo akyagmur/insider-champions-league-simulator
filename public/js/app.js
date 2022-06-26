@@ -19875,7 +19875,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/fixtures/prepare-fixtures').then(function (response) {
-        _this2.weeks = response.data;
+        _this2.fetchAllWeeks();
       })["catch"](function (error) {
         console.log(error);
       });

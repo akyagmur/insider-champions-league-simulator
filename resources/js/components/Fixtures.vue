@@ -47,7 +47,7 @@ export default {
         generateFixtures() {
             axios.get('/api/fixtures/prepare-fixtures')
                 .then(response => {
-                    this.weeks = response.data;
+                    this.fetchAllWeeks();
                 })
                 .catch(error => {
                     console.log(error)
