@@ -38,24 +38,50 @@ trait FixtureTrait
                     $competition[1]['id'],
                 ];
             })
+            ->shuffle()
             ->values();
 
-        foreach (range(1, 6) as $i) {
-            $ilkmac     = $competitions[$i - 1];
-            $ikincimac  = $competitions[count($competitions) - $i];
+        $matches = $this->setFirstHalfFixture($competitions->toArray());
 
-            Competition::create([
-                'host_team_id' => $ilkmac[0],
-                'guest_team_id' => $ilkmac[1],
-                'week_id' => $i,
-            ]);
+        foreach ($matches as $key => $week) {
+            foreach ($week as $match) {
+                // Create first half of the season
+                Competition::create([
+                    'week_id' => $key + 1,
+                    'host_team_id' => $match[0],
+                    'guest_team_id' => $match[1],
+                ]);
 
-            Competition::create([
-                'host_team_id' => $ikincimac[0],
-                'guest_team_id' => $ikincimac[1],
-                'week_id' => $i,
-            ]);
+                // Create second half of the season, inverse of the first half
+                Competition::create([
+                    'week_id' => ($key + 4),
+                    'host_team_id' => $match[1],
+                    'guest_team_id' => $match[0],
+                ]);
+            }
         }
+    }
+
+    /**
+     * All teams should play in each week.
+     */
+    private function setFirstHalfFixture(array $array): array
+    {
+        $combinations = [];
+        foreach ($array as $key => $value) {
+            foreach ($array as $otherKey => $otherValue) {
+                if ($otherKey !== $key) {
+                    if (empty(array_intersect($value, $otherValue))) {
+                        unset($array[$key]);
+                        $combinations[] = [$value, $otherValue];
+                        break;
+                    }
+                }
+            }
+            if (count($combinations) == 3) break;
+        }
+
+        return $combinations;
     }
 
     /**
