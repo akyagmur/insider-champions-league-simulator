@@ -49,6 +49,7 @@
                 Weeks
             </button>
             <button v-on:click="playNextWeek()"
+            v-if="week.id !== 6"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play Next
                 Week
             </button>
@@ -71,7 +72,7 @@ export default {
     name: 'Fixtures',
     data() {
         return {
-            weeks: [],
+            weeks: {},
             predictions: [],
             week: [],
             leagueTable: [],
